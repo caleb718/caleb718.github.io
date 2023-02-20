@@ -13,34 +13,61 @@
         background-color: white;
     }
     .box{
-    background-color: mediumseagreen;
-    width: 160px;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    color: aliceblue;
-    font-family: monospace;
-    display: inline-block;
-    margin: 10px;
-
+        background-color: mediumseagreen;
+        width: 160px;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        color: aliceblue;
+        font-family: monospace;
+        display: inline-block;
+        margin: 10px;
     }
 
     .box2{
         background-color: chocolate;
-        
     }
+
     .box:hover{
         background-color: #E91E63;
     }
 
     .header{
         font-size: 50px;
-    font-family: fantasy;
+        font-family: fantasy;
     }
+
     .header2{
         font-size: 40px;
     }
+
+    /* Media queries for different screen sizes */
+
+    @media screen and (max-width: 768px) {
+        /* Styles for screens up to 768px wide */
+        .box {
+            width: 100%;
+            margin: 10px 0;
+        }
+    }
+
+    @media screen and (min-width: 768px) and (max-width: 1024px) {
+        /* Styles for screens between 768px and 1024px wide */
+        .box {
+            width: 45%;
+            margin: 10px;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        /* Styles for screens wider than 1024px */
+        .box {
+            width: 30%;
+            margin: 10px;
+        }
+    }
 </style>
+
 
 </head>
 <body>
