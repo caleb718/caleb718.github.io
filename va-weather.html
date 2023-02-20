@@ -1,20 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>weather</title>
+<html>
+  <head>
+    <title>Weather Widget</title>
+  </head>
+  <body>
+    <h1>Weather Widget</h1>
+    <div id="weather"></div>
+	<div
+	<p id="output"></p>
+	</div>
 
-    <style>
-        body{
-            background-color: aliceblue;
-        }
-    </style>
-</head>
-<body>
-    <a class="weatherwidget-io" href="https://forecast7.com/en/37d82n79d82/clifton-forge/?unit=us" data-label_1="Clifton Forge" data-label_2="WEATHER" data-days="3" data-theme="gray" >Clifton Forge</a>
+    <button id="weather-btn">Get Current Weather</button>
+
     <script>
-    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+const weatherBtn = document.getElementById('weather-btn');
+weatherBtn.addEventListener('click', handleWeatherBtnClick);
+
+const cities = {
+  "Charlottesville": { lat: 38.03, lon: -78.48 },
+  "Richmond": { lat: 37.55, lon: -77.46 },
+  "Va Beach": { lat: 36.85, lon: -75.98 },
+  "Clifton Forge": { lat: 37.82, lon: -79.82 },
+  "Louisa": { lat: 38.03, lon: -78.00}
+};
+
+function handleWeatherBtnClick() {
+  const cityName = prompt("Enter a city name:");
+  const coordinates = getCoordinates(cityName);
+  if (typeof coordinates === "object") {
+    console.log(`Lat: ${coordinates.lat}, Lon: ${coordinates.lon}`);
+    getCurrentWeather(coordinates, cityName);
+  } else {
+    console.log(coordinates);
+  }
+}
+
+async function getCurrentWeather(coordinates, cityName) {
+  const response = await fetch(`https://api.open-meteo.com/v1/gfs?latitude=${coordinates.lat}&longitude=${coordinates.lon}&hourly=temperature_2m,precipitation,snowfall,weathercode,snow_depth,cloudcover,windspeed_10m&daily=sunrise,sunset,precipitation_sum,snowfall_sum,precipitation_hours,windspeed_10m_max,shortwave_radiation_sum&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FNew_York&current_weather=true`);
+  const data = await response.json();
+  const currentTemp = data.current_weather.temperature;
+  console.log(currentTemp);
+  const weatherDiv = document.getElementById('weather');
+  weatherDiv.innerHTML = `Current weather in ${cityName}: ${currentTemp} &deg;F`;
+}
+
+function getCoordinates(city) {
+  const coordinates = cities[city];
+  if (coordinates) {
+    return coordinates;
+  } else {
+    return "City not found";
+  }
+}
+
     </script>
-</body>
+  </body>
 </html>
